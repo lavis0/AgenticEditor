@@ -1,6 +1,6 @@
 import os
 import subprocess
-
+from google.genai import types
 
 def run_python(working_directory, file_path):
     working_dir_abs = os.path.abspath(working_directory)
@@ -41,3 +41,20 @@ def run_python(working_directory, file_path):
         return 'No output produced.'
 
     return output
+
+schema_run_python = types.FunctionDeclaration(
+        name="run_python",
+        description="Returns the stdout, stderr and return code (if failed)"
+                    "of a python file in a specified location,"
+                    "constrained to the working directory.",
+        parameters=types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "file_path": types.Schema(
+                    type=types.Type.STRING,
+                    description="The path to the python file to run/execute,"
+                                "relative to the working directory. ",
+                ),
+            },
+        ),
+    )
