@@ -4,7 +4,7 @@ import os
 def get_files_info(working_directory, directory=None):
     # correct to absolute paths, working dir
     working_dir_abs = os.path.abspath(working_directory)
-    target_dir_abs = ''
+    target_dir_abs = working_dir_abs
 
     if directory:
         target_dir_abs = os.path.abspath(os.path.join(working_directory, directory))
