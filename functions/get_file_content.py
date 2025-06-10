@@ -1,5 +1,6 @@
 import os
 from google.genai import types
+from config import MAX_CHARS
 
 def get_file_content(working_directory, file_path):
     work_dir_abs = os.path.abspath(working_directory)
@@ -12,8 +13,6 @@ def get_file_content(working_directory, file_path):
         return f'Error: File not found or is not a regular file: "{file_path_abs}"'
 
     # read file content
-    MAX_CHARS = 10000 # to avoid using too many tokens
-
     try:
         with open(file_path_abs, 'r') as f:
             file_content_str = f.read(MAX_CHARS)
