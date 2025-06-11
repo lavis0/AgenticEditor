@@ -30,7 +30,7 @@ def call_function(call, verbose=False):
         args = dict(call.args)
         args["working_directory"] = WORKING_DIR
 
-        result = func_dict[call.name](**call.args)
+        result = func_dict[call.name](**args)
         return types.Content(
             role="tool",
             parts=[
