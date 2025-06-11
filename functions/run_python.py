@@ -2,7 +2,7 @@ import os
 import subprocess
 from google.genai import types
 
-def run_python(working_directory, file_path):
+def run_python(working_directory, file_path, args=None):
     working_dir_abs = os.path.abspath(working_directory)
     file_path_abs = ''
 
@@ -16,7 +16,10 @@ def run_python(working_directory, file_path):
         return f'Error: "{file_path}" is not a Python file.'
 
     try:
-        process_output = subprocess.run(['python3', file_path_abs],
+        commands = ['python3', file_path_abs]
+        if args:
+            commands.extend(args)
+        process_output = subprocess.run(commands,
                                         cwd=working_dir_abs,
                                         timeout=30,
                                         capture_output=True)
@@ -52,6 +55,14 @@ schema_run_python = types.FunctionDeclaration(
                     type=types.Type.STRING,
                     description="The path to the python file to run/execute,"
                                 "relative to the working directory. ",
+                ),
+                "args": types.Schema(
+                    type=types.Type.ARRAY,
+                    items=types.Schema(
+                        type=types.Type.STRING,
+                        description="Optional arguments to pass to the Python file.",
+                    ),
+                    description="Optional arguments to pass to the Python file.",
                 ),
             },
         ),
